@@ -70,13 +70,11 @@ if st.checkbox("Show monthly summary"):
         # Order months correctly
         month_order = [
             "January","February","March","April","May","June",
-            "July","August","September","October","November","December"
-        ]
+            "July","August","September","October","November","December"]
         month_summary["month"] = pd.Categorical(
             month_summary["month"].str.capitalize(),
             categories=month_order,
-            ordered=True
-        )
+            ordered=True)
         month_summary = month_summary.sort_values("month").dropna(subset=["month"])
 
         fig, ax = plt.subplots(figsize=(10,5))
@@ -103,6 +101,7 @@ if st.checkbox("Show pie chart (by category)"):
         st.pyplot(fig)
     else:
         st.info("No data to plot.")
+
 
 
 
