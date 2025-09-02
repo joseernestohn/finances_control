@@ -58,27 +58,34 @@ if st.checkbox("Show table of expenses"):
     else:
         st.info("No data yet.")
 
-# --- Summary by category --- #
-st.subheader("📈 Summary by Category")
-if st.checkbox("Show summary"):
-    summary = get_summary()
-    if not summary.empty:
-        st.bar_chart(summary.set_index("category"))
-    else:
-        st.info("No data to summarize.")
+st.subheader("📈 Summary by Month")
+if st.checkbox("Show monthly summary"):
+    month_summary = get_month_summary()
+    if not month_summary.empty:
+        # Ensure months are in calendar order
+        month_order = [
+            "January","February","March","April","May","June",
+            "July","August","September","October","November","December"
+        ]
+        month_summary["month"] = pd.Categorical(
+            month_summary["month"].str.capitalize(),
+            categories=month_order,
+            ordered=True
+        )
+        month_summary = month_summary.sort_values("month").dropna(subset=["month"])
 
-# --- Matplotlib chart --- #
-st.subheader("📉 Expense Distribution")
-if st.checkbox("Show pie chart (Matplotlib)"):
-    summary = get_summary()
-    if not summary.empty:
-        fig, ax = plt.subplots()
-        ax.pie(summary["total"], labels=summary["category"], autopct="%1.1f%%")
-        ax.set_title("Expense distribution by category")
-        ax.tick_params(axis='x', rotation=100)
+        fig, ax = plt.subplots(figsize=(10,5))
+        ax.bar(month_summary["month"], month_summary["total"], color=plt.cm.Pastel1.colors[:len(month_summary)])
+        ax.set_xlabel("Month")
+        ax.set_ylabel("Amount")
+        ax.set_title("Expenses by Month")
+        ax.tick_params(axis='x', rotation=15)  # slight tilt for readability
+        for i, value in enumerate(month_summary["total"]):
+            ax.text(i, value, f"${value:,.2f}", ha='center', va='bottom', fontsize=9)
         st.pyplot(fig)
     else:
-        st.info("No data to plot.")
+        st.info("No data to summarize by month.")
+
 
 
 
