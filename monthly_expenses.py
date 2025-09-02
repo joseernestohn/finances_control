@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 # ---------------- DATABASE ---------------- #
-DB_PATH = "expenses.db"
+DB_PATH = "expenses_app.db"
+
 
 def create_table():
     with sqlite3.connect(DB_PATH) as conn:
@@ -78,6 +79,7 @@ if st.checkbox("Show pie chart (Matplotlib)"):
         st.pyplot(fig)
     else:
         st.info("No data to plot.")
+
 
 
 
