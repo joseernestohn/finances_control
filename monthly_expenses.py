@@ -75,10 +75,11 @@ if st.checkbox("Show pie chart (Matplotlib)"):
         fig, ax = plt.subplots()
         ax.pie(summary["total"], labels=summary["category"], autopct="%1.1f%%")
         ax.set_title("Expense distribution by category")
-        ax.tick_params(axis='x', rotation=0)
+        ax.tick_params(axis='x', rotation=20)
         st.pyplot(fig)
     else:
         st.info("No data to plot.")
+
 
 
 
