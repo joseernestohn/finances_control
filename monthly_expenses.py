@@ -62,15 +62,6 @@ if st.checkbox("Show table of expenses"):
     else:
         st.info("No data yet.")
 
-# --- Clear all expenses from database --- #
-st.subheader("🗑️ Clear All Expenses")
-if st.button("Clear Database"):
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM expenses")  # delete all rows
-        conn.commit()
-    st.success("All expenses have been deleted!")
-
 # --- Bar chart by month --- #
 st.subheader("📈 Summary by Month")
 if st.checkbox("Show monthly summary"):
@@ -111,6 +102,14 @@ if st.checkbox("Show pie chart (by category)"):
     else:
         st.info("No data to plot.")
 
+# --- Clear all expenses from database --- #
+st.subheader("🗑️ Clear All Expenses")
+if st.button("Clear Database"):
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM expenses")  # delete all rows
+        conn.commit()
+    st.success("All expenses have been deleted!")
 
 
 
