@@ -42,8 +42,7 @@ with st.form("expense_form"):
     amount = st.number_input("Amount", min_value=0.0, step=1.0)
     month = st.selectbox("Month", [
         "January","February","March","April","May","June",
-        "July","August","September","October","November","December"
-    ])
+        "July","August","September","October","November","December"])
     submitted = st.form_submit_button("Add")
     if submitted and category and amount > 0:
         insert_expense(category, amount, month)
@@ -75,8 +74,10 @@ if st.checkbox("Show pie chart (Matplotlib)"):
         fig, ax = plt.subplots()
         ax.pie(summary["total"], labels=summary["category"], autopct="%1.1f%%")
         ax.set_title("Expense distribution by category")
+        ax.tick_params(axis='x', rotation=0)
         st.pyplot(fig)
     else:
         st.info("No data to plot.")
+
 
 
